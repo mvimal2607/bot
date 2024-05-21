@@ -5,7 +5,7 @@ from tqdm.contrib.telegram import tqdm, trange
 from base64 import decodebytes
 from database import *
 from pathlib import Path
-import pathlib 
+import pathlib
 import logging
 import pysftp
 import gdown
@@ -37,8 +37,8 @@ cnopts = pysftp.CnOpts()
 cnopts.hostkeys.add('frs.sourceforge.net', 'ssh-ed25519', key)
 
 # Official device list
-devurl = "https://raw.githubusercontent.com/ProjectBlaze/vendor_blaze/12.1/blaze.devices"
-gdevurl = "https://github.com/ProjectBlaze/vendor_blaze/blob/12.1/blaze.devices"
+devurl = "https://raw.githubusercontent.com/ProjectEverest/vendor_everst/qpr2/everst.devices"
+gdevurl = "https://github.com/ProjectEverst/vendor_everst/blob/12.1/everest.devices"
 req = requests.get(devurl)
 if req.status_code in [200]:
     devices = req.text
@@ -51,7 +51,7 @@ devices = devices.split(',')
 async def start(update: Update, context: CallbackContext.DEFAULT_TYPE):
     mess_id = update.effective_message.message_id
     mess = '''
-Hello, I am BlazeBot.
+Hello, I am EverestBot.
 Use /help to know how to use me.
 '''
     await context.bot.send_message(CHAT_ID, reply_to_message_id=mess_id, text=mess)
@@ -83,11 +83,8 @@ Use this command in following format to make post for your device.
 device_codename is codename for your device.
 Please use UpperCase letters if you did same <a href="{gdevurl}">here</a>
 
-device_changelog_link is telegraph link of changelog for your device.
+device_changelog_link is telegraph link of changelog for your device.'''
 
-e.g. :
-/post onclite https://telegra.ph/Changelogs-11-05-08
-'''
     dmess = f'''
 Sorry, I couldn't find your device codename <a href="{gdevurl}" >here</a>.
 Please make PR if you didn't.
@@ -115,7 +112,7 @@ Please make PR if you didn't.
     year = current_time.year
     date = f" {month}-{day}-{year} "
     mess = f'''
-Project Blaze v{database['BlazeVersion']} - OFFICIAL | Android 12L
+Project Everest v{database['EverestVersion']} - OFFICIAL | Android 14
 📲 : {database[codename]['device']} ({codename})
 📅 : {date}
 🧑‍💼 : {database[codename]['maintainer']}
@@ -127,6 +124,6 @@ Project Blaze v{database['BlazeVersion']} - OFFICIAL | Android 12L
 ▪️ <a href="https://t.me/projectblaze" >Community Chat</a>
 ▪️ <a href="https://t.me/projectblazeupdates" >Updates Channel</a>
 
-#Blaze #{codename} #Android12L #S
+#Everest #{codename} #Android14 #U
 '''
     await context.bot.send_photo(CHAT_ID, photo=open('images/blaze1.2.png', 'rb'), caption=mess, reply_to_message_id=mess_id, parse_mode='HTML')
